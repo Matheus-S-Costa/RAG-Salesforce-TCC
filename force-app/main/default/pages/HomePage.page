@@ -1,0 +1,104 @@
+<apex:page >
+    <!-- Estilos da Página -->
+    <style type='text/css'>
+        body {
+            font-family: "Arial", sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+        .header {
+            background-color: #0D0342;
+            padding: 10px 0;
+            color: white;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+        .content {
+            margin-top: 30px;
+        }
+        .content p {
+            font-size: 1.2em;
+            color: #333;
+        }
+        .footer {
+            margin-top: 50px;
+            font-size: 0.9em;
+            color: #777;
+        }
+        /* Estilos do Bot */
+        .embeddedServiceHelpButton .helpButton .uiButton {
+            background-color: #0D0342;
+            font-family: "Arial", sans-serif;
+        }
+        .embeddedServiceHelpButton .helpButton .uiButton:focus {
+            outline: 1px solid #0D0342;
+        }
+    </style>
+
+    <!-- Estrutura da Página -->
+    <div class="container">
+        <!-- Cabeçalho -->
+        <div class="header">
+            <h1>Salesforce ChatBot</h1>
+        </div>
+
+        <!-- Conteúdo Principal -->
+        <div class="content">
+            <p>Esta é uma página inicial criada para demonstrar a integração de um bot do Einstein no Salesforce.</p>
+            <p>Use o botão de chat no canto inferior direito do componente para interagir com o nosso bot!</p>
+        </div>
+
+        <!-- Rodapé -->
+        <div class="footer">
+            <p>© 2024 TCC Una. Todos os direitos reservados.</p>
+        </div>
+    </div>
+
+    <!-- Script do Embedded Service e Einstein Bot -->
+    <script type='text/javascript' src='https://service.force.com/embeddedservice/5.0/esw.min.js'></script>
+    <script type='text/javascript'>
+        var initESW = function(gslbBaseURL) {
+            embedded_svc.settings.displayHelpButton = true; // Exibir o botão de ajuda
+            embedded_svc.settings.language = ''; // Idioma (por exemplo, 'en-US')
+
+            embedded_svc.settings.enabledFeatures = ['LiveAgent'];
+            embedded_svc.settings.entryFeature = 'LiveAgent';
+
+            embedded_svc.init(
+                'https://una-dev-ed.develop.my.salesforce.com',
+                'https://una-dev-ed.develop.my.salesforce-sites.com/liveAgentSetupFlow',
+                gslbBaseURL,
+                '00Dak00000CDznf',
+                'BotEnableGroup',
+                {
+                    baseLiveAgentContentURL: 'https://c.la11-core1.sfdc-8tgtt5.salesforceliveagent.com/content',
+                    deploymentId: '572ak000008Opw1',
+                    buttonId: '573ak000002HXmP',
+                    baseLiveAgentURL: 'https://d.la11-core1.sfdc-8tgtt5.salesforceliveagent.com/chat',
+                    eswLiveAgentDevName: 'BotEnableGroup',
+                    isOfflineSupportEnabled: false
+                }
+            );
+        };
+
+        if (!window.embedded_svc) {
+            var s = document.createElement('script');
+            s.setAttribute('src', 'https://una-dev-ed.develop.my.salesforce.com/embeddedservice/5.0/esw.min.js');
+            s.onload = function() {
+                initESW(null);
+            };
+            document.body.appendChild(s);
+        } else {
+            initESW('https://service.force.com');
+        }
+    </script>
+</apex:page>
