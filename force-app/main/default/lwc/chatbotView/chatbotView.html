@@ -1,0 +1,33 @@
+<template>
+    <lightning-card title="Chatbot" icon-name="custom:custom63">
+        <div class="slds-p-around_medium">
+            <lightning-textarea 
+                label="Digite sua mensagem" 
+                value={userMessage} 
+                placeholder="Escreva sua pergunta aqui..." 
+                onchange={handleInputChange}>
+            </lightning-textarea>
+            
+            <lightning-button 
+                variant="brand" 
+                label="Enviar" 
+                onclick={handleSendMessage} 
+                class="slds-m-top_medium" 
+                disabled={isButtonDisabled}>
+            </lightning-button>
+            
+            <template if:true={isLoading}>
+                <div class="slds-spinner_container slds-m-top_medium">
+                    <lightning-spinner alternative-text="Enviando..." size="small"></lightning-spinner>
+                </div>
+            </template>
+
+            <template if:true={responseMessage}>
+                <div class="slds-m-top_medium">
+                    <lightning-formatted-text value={responseMessage}></lightning-formatted-text>
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>
+
