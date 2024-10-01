@@ -46,7 +46,7 @@ global with sharing class ChatbotController {
         return flowOutputs;
     }
 
-    @InvocableMethod(label = 'Interact to Open AI' description='Send question to Open AI and get the message')
+    @InvocableMethod(label = 'Interagir com IA' description='Envie a pergunta para Open AI e receba a resposta.')
     global static List<FlowOutput> callApi(List<FlowInput> message) {
         System.debug(message);
         HttpRequest request = new HttpRequest();
@@ -57,8 +57,9 @@ global with sharing class ChatbotController {
         request.setHeader('Accept', 'application/json');
         request.setHeader('Authorization', 'Bearer ' + CHAT_GPT_KEY);
 
-
-        request.setBody('{"model": "gpt-4o-mini","messages": [{"role": "user", "content": "'+ message +'"}], "temperature": 0.7}');
+        
+        String prompt = message + '. Por favor, se baseie em um contexto voltado para o Salesforce. Caso não seja possível, favor informar previamente.';
+        request.setBody('{"model": "gpt-4o-mini","messages": [{"role": "user", "content": "'+ prompt +'"}], "temperature": 0.7}');
         
         Http http = new Http();
         HttpResponse response = http.send(request);
