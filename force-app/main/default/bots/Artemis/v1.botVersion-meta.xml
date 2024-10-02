@@ -38,10 +38,13 @@
         <botSteps>
             <botNavigation>
                 <botNavigationLinks>
+                    <targetBotDialog>ChatIA</targetBotDialog>
+                </botNavigationLinks>
+                <botNavigationLinks>
                     <targetBotDialog>Criar_novo_lead</targetBotDialog>
                 </botNavigationLinks>
                 <botNavigationLinks>
-                    <targetBotDialog>ChatIA</targetBotDialog>
+                    <targetBotDialog>End_Chat</targetBotDialog>
                 </botNavigationLinks>
                 <type>Redirect</type>
             </botNavigation>
@@ -69,7 +72,7 @@
     <botDialogs>
         <botSteps>
             <botMessages>
-                <message>Thanks for taking the time to chat. To close the conversation, select End Chat.</message>
+                <message>Obrigado por nos contactar. Para fechar a conversa, por favor, selecione &quot;End Chat&quot;.</message>
                 <messageIdentifier>d8229965-7e1a-4ce1-b3d6-7b714d0eb87d</messageIdentifier>
             </botMessages>
             <stepIdentifier>c1462d69-376b-4930-8456-a6dfa18578ff</stepIdentifier>
@@ -87,7 +90,7 @@
     <botDialogs>
         <botSteps>
             <botMessages>
-                <message>Sorry, I didn&apos;t understand that.</message>
+                <message>Desculpe, eu não entendi.</message>
                 <messageIdentifier>60a9b282-9b10-46f3-ab85-833a2790edf9</messageIdentifier>
             </botMessages>
             <stepIdentifier>ac62090f-8e86-45cb-b7fd-e4334e90a51b</stepIdentifier>
@@ -105,11 +108,26 @@
     <botDialogs>
         <botSteps>
             <botMessages>
-                <message>Unfortunately, there are no agents available at the moment</message>
+                <message>Não possuímos agentes disponíveis no momento. Tente outra opção enquanto isso.</message>
                 <messageIdentifier>dd568285-88a3-41d6-9906-b1ada5a26488</messageIdentifier>
             </botMessages>
             <stepIdentifier>62907bc8-4854-49cc-a5e1-8da3a5d4bdca</stepIdentifier>
             <type>Message</type>
+        </botSteps>
+        <botSteps>
+            <botSteps>
+                <botNavigation>
+                    <botNavigationLinks>
+                        <targetBotDialog>Main_Menu</targetBotDialog>
+                    </botNavigationLinks>
+                    <type>Redirect</type>
+                </botNavigation>
+                <stepIdentifier>2ea8cfc2-4409-43be-9e9b-8c197c8dcc9a</stepIdentifier>
+                <type>Navigation</type>
+            </botSteps>
+            <conditionLogicType>And</conditionLogicType>
+            <stepIdentifier>59f0767a-328c-4296-93b4-96fa6402e89f</stepIdentifier>
+            <type>Group</type>
         </botSteps>
         <botSteps>
             <stepIdentifier>15526fe9-1d48-4aaa-af46-afffbf89eceb</stepIdentifier>
@@ -123,7 +141,7 @@
     <botDialogs>
         <botSteps>
             <botMessages>
-                <message>Unfortunately, a system error occurred. I&apos;ll connect you to an agent who can help.</message>
+                <message>Infelizmente, ocorreu um erro no nosso sistema. Nós tentaremos contactar um agente para apoia-lo.</message>
                 <messageIdentifier>521f1342-a3af-42ed-92d4-5fe7ec87ca59</messageIdentifier>
             </botMessages>
             <stepIdentifier>d4fd3f11-f66a-49da-8182-a3281f75ca05</stepIdentifier>
@@ -170,7 +188,7 @@
                     <invocationActionName>ChatbotController</invocationActionName>
                     <invocationActionType>apex</invocationActionType>
                     <invocationMappings>
-                        <parameterName>requestMessage</parameterName>
+                        <parameterName>questionMessage</parameterName>
                         <type>Input</type>
                         <variableName>Pergunta</variableName>
                         <variableType>ConversationVariable</variableType>
@@ -183,7 +201,7 @@
                     </invocationMappings>
                 </botInvocation>
                 <type>Set</type>
-                <variableOperationIdentifier>ac4b379d-e59c-4bcb-9450-f3f347a3010c</variableOperationIdentifier>
+                <variableOperationIdentifier>78e10500-ffcd-415c-8b8d-f42874eacb66</variableOperationIdentifier>
             </botVariableOperation>
             <stepIdentifier>7b719068-cccf-4065-a6ce-c759368961f3</stepIdentifier>
             <type>VariableOperation</type>
@@ -238,7 +256,7 @@
                 <conversationSystemMessage>
                     <type>EndChat</type>
                 </conversationSystemMessage>
-                <stepIdentifier>d072c3d3-a609-4722-ae45-ab9f52b83cc2</stepIdentifier>
+                <stepIdentifier>59a7ed8c-a1f9-4f0a-9002-1d5ecdab5624</stepIdentifier>
                 <type>SystemMessage</type>
             </botSteps>
             <conditionLogicType>And</conditionLogicType>
@@ -259,7 +277,7 @@
                     </botNavigationLinks>
                     <type>Redirect</type>
                 </botNavigation>
-                <stepIdentifier>2e4325b1-6215-40ce-af40-16683a5a56fe</stepIdentifier>
+                <stepIdentifier>1bcdd332-ba75-4046-aaf0-4e285f27330f</stepIdentifier>
                 <type>Navigation</type>
             </botSteps>
             <conditionLogicType>And</conditionLogicType>
@@ -276,6 +294,306 @@
         <showInFooterMenu>true</showInFooterMenu>
     </botDialogs>
     <botDialogs>
+        <botSteps>
+            <botMessages>
+                <message>Precisaremos coletar algumas informações que são obrigatórios para a criação do lead.</message>
+                <messageIdentifier>9cc02920-9190-9e22-9076-7cde930aa09c</messageIdentifier>
+            </botMessages>
+            <stepIdentifier>62b37fc9-35cb-425d-a7d5-8e7196618202</stepIdentifier>
+            <type>Message</type>
+        </botSteps>
+        <botSteps>
+            <botVariableOperation>
+                <askCollectIfSet>false</askCollectIfSet>
+                <botMessages>
+                    <message>Qual o titulo do  seu lead?</message>
+                    <messageIdentifier>8ed33671-e6f4-1438-8e2a-12cbd7e44f21</messageIdentifier>
+                </botMessages>
+                <botVariableOperands>
+                    <disableAutoFill>true</disableAutoFill>
+                    <sourceName>_Text</sourceName>
+                    <sourceType>StandardMlSlotClass</sourceType>
+                    <targetName>title</targetName>
+                    <targetType>ConversationVariable</targetType>
+                </botVariableOperands>
+                <optionalCollect>false</optionalCollect>
+                <quickReplyWidgetType>Buttons</quickReplyWidgetType>
+                <type>Collect</type>
+                <variableOperationIdentifier>8e64e5b6-1ab6-c6c4-a426-dc572829fb67</variableOperationIdentifier>
+            </botVariableOperation>
+            <stepIdentifier>faf4e704-bef1-260f-1fac-b40cc4fe4de2</stepIdentifier>
+            <type>VariableOperation</type>
+        </botSteps>
+        <botSteps>
+            <botVariableOperation>
+                <askCollectIfSet>false</askCollectIfSet>
+                <botMessages>
+                    <message>Qual o seu primeiro nome?</message>
+                    <messageIdentifier>0fc5ba41-9d5f-10ce-41e0-ad008471573f</messageIdentifier>
+                </botMessages>
+                <botVariableOperands>
+                    <disableAutoFill>true</disableAutoFill>
+                    <sourceName>_Text</sourceName>
+                    <sourceType>StandardMlSlotClass</sourceType>
+                    <targetName>FirstName</targetName>
+                    <targetType>ConversationVariable</targetType>
+                </botVariableOperands>
+                <optionalCollect>false</optionalCollect>
+                <quickReplyWidgetType>Buttons</quickReplyWidgetType>
+                <type>Collect</type>
+                <variableOperationIdentifier>6216142c-aa1f-2fdf-1455-6e74da9464be</variableOperationIdentifier>
+            </botVariableOperation>
+            <stepIdentifier>5808f71a-f51c-940d-86b8-a3070e063303</stepIdentifier>
+            <type>VariableOperation</type>
+        </botSteps>
+        <botSteps>
+            <botVariableOperation>
+                <askCollectIfSet>false</askCollectIfSet>
+                <botMessages>
+                    <message>Certo {!FirstName}, agora, me fale qual o seu sobrenome?</message>
+                    <messageIdentifier>c33abca2-12f0-4a2a-dc6a-fcd42dfc709d</messageIdentifier>
+                </botMessages>
+                <botVariableOperands>
+                    <disableAutoFill>true</disableAutoFill>
+                    <sourceName>_Text</sourceName>
+                    <sourceType>StandardMlSlotClass</sourceType>
+                    <targetName>LastName</targetName>
+                    <targetType>ConversationVariable</targetType>
+                </botVariableOperands>
+                <optionalCollect>false</optionalCollect>
+                <quickReplyWidgetType>Buttons</quickReplyWidgetType>
+                <type>Collect</type>
+                <variableOperationIdentifier>20288b66-252a-3e52-5adb-ada984aed1fc</variableOperationIdentifier>
+            </botVariableOperation>
+            <stepIdentifier>3196d1f3-95c5-21a9-7ebb-8fd846c7d10f</stepIdentifier>
+            <type>VariableOperation</type>
+        </botSteps>
+        <botSteps>
+            <botVariableOperation>
+                <askCollectIfSet>false</askCollectIfSet>
+                <botMessages>
+                    <message>Qual a empresa relacionada ao lead?</message>
+                    <messageIdentifier>98bac6cc-1d26-9e68-e5d3-a6dd78ca3751</messageIdentifier>
+                </botMessages>
+                <botVariableOperands>
+                    <disableAutoFill>true</disableAutoFill>
+                    <sourceName>_Text</sourceName>
+                    <sourceType>StandardMlSlotClass</sourceType>
+                    <targetName>company</targetName>
+                    <targetType>ConversationVariable</targetType>
+                </botVariableOperands>
+                <optionalCollect>false</optionalCollect>
+                <quickReplyWidgetType>Buttons</quickReplyWidgetType>
+                <type>Collect</type>
+                <variableOperationIdentifier>94666989-c82d-c916-9a74-8946195cc7a3</variableOperationIdentifier>
+            </botVariableOperation>
+            <stepIdentifier>da23f175-aed3-30a2-3942-e8e8d0a472fe</stepIdentifier>
+            <type>VariableOperation</type>
+        </botSteps>
+        <botSteps>
+            <botMessages>
+                <message>Agora, para o telefone, siga o exemplo:
+31999999999</message>
+                <messageIdentifier>370a0911-1125-f7d4-53c5-6552b5b5859e</messageIdentifier>
+            </botMessages>
+            <stepIdentifier>21b23a81-ed58-4053-b600-af494e20eca4</stepIdentifier>
+            <type>Message</type>
+        </botSteps>
+        <botSteps>
+            <botVariableOperation>
+                <askCollectIfSet>false</askCollectIfSet>
+                <botMessages>
+                    <message>Qual o telefone relacionado ao lead?</message>
+                    <messageIdentifier>0e181056-4a91-61b4-c31a-aaea8f9b7fab</messageIdentifier>
+                </botMessages>
+                <botVariableOperands>
+                    <disableAutoFill>true</disableAutoFill>
+                    <sourceName>_PhoneNumber</sourceName>
+                    <sourceType>StandardMlSlotClass</sourceType>
+                    <targetName>phone</targetName>
+                    <targetType>ConversationVariable</targetType>
+                </botVariableOperands>
+                <optionalCollect>false</optionalCollect>
+                <quickReplyWidgetType>Buttons</quickReplyWidgetType>
+                <type>Collect</type>
+                <variableOperationIdentifier>8f359916-df48-8622-d293-52f847b9772a</variableOperationIdentifier>
+            </botVariableOperation>
+            <stepIdentifier>337a5b11-d4a4-54da-5da5-107412385291</stepIdentifier>
+            <type>VariableOperation</type>
+        </botSteps>
+        <botSteps>
+            <botMessages>
+                <message>E para o email, siga o exemplo:
+refused@example.com</message>
+                <messageIdentifier>4da53d71-6fc1-fdcc-506d-d49911e12e1a</messageIdentifier>
+            </botMessages>
+            <stepIdentifier>9a588add-0ed6-407b-8a03-2c8192d41c12</stepIdentifier>
+            <type>Message</type>
+        </botSteps>
+        <botSteps>
+            <botVariableOperation>
+                <askCollectIfSet>false</askCollectIfSet>
+                <botMessages>
+                    <message>Qual o email relacionado ao lead?</message>
+                    <messageIdentifier>1af75a08-c996-4806-c426-14796c6d1757</messageIdentifier>
+                </botMessages>
+                <botVariableOperands>
+                    <disableAutoFill>true</disableAutoFill>
+                    <sourceName>_Text</sourceName>
+                    <sourceType>StandardMlSlotClass</sourceType>
+                    <targetName>email</targetName>
+                    <targetType>ConversationVariable</targetType>
+                </botVariableOperands>
+                <optionalCollect>false</optionalCollect>
+                <quickReplyWidgetType>Buttons</quickReplyWidgetType>
+                <type>Collect</type>
+                <variableOperationIdentifier>590b312d-35ae-6e26-f716-d7519ea62a1f</variableOperationIdentifier>
+            </botVariableOperation>
+            <stepIdentifier>cfc47e05-926d-2e21-31f3-0b96b267aa6a</stepIdentifier>
+            <type>VariableOperation</type>
+        </botSteps>
+        <botSteps>
+            <botVariableOperation>
+                <botInvocation>
+                    <invocationActionName>LeadController</invocationActionName>
+                    <invocationActionType>apex</invocationActionType>
+                    <invocationMappings>
+                        <parameterName>phone</parameterName>
+                        <type>Input</type>
+                        <variableName>phone</variableName>
+                        <variableType>ConversationVariable</variableType>
+                    </invocationMappings>
+                    <invocationMappings>
+                        <parameterName>company</parameterName>
+                        <type>Input</type>
+                        <variableName>company</variableName>
+                        <variableType>ConversationVariable</variableType>
+                    </invocationMappings>
+                    <invocationMappings>
+                        <parameterName>lastName</parameterName>
+                        <type>Input</type>
+                        <variableName>LastName</variableName>
+                        <variableType>ConversationVariable</variableType>
+                    </invocationMappings>
+                    <invocationMappings>
+                        <parameterName>email</parameterName>
+                        <type>Input</type>
+                        <variableName>email</variableName>
+                        <variableType>ConversationVariable</variableType>
+                    </invocationMappings>
+                    <invocationMappings>
+                        <parameterName>firstName</parameterName>
+                        <type>Input</type>
+                        <variableName>FirstName</variableName>
+                        <variableType>ConversationVariable</variableType>
+                    </invocationMappings>
+                    <invocationMappings>
+                        <parameterName>title</parameterName>
+                        <type>Input</type>
+                        <variableName>title</variableName>
+                        <variableType>ConversationVariable</variableType>
+                    </invocationMappings>
+                    <invocationMappings>
+                        <parameterName>status</parameterName>
+                        <type>Output</type>
+                        <variableName>Status</variableName>
+                        <variableType>ConversationVariable</variableType>
+                    </invocationMappings>
+                    <invocationMappings>
+                        <parameterName>message</parameterName>
+                        <type>Output</type>
+                        <variableName>message</variableName>
+                        <variableType>ConversationVariable</variableType>
+                    </invocationMappings>
+                </botInvocation>
+                <type>Set</type>
+                <variableOperationIdentifier>2ac91424-5785-4ef7-8a25-132dd12f79f0</variableOperationIdentifier>
+            </botVariableOperation>
+            <stepIdentifier>7ef723fb-8d2f-4347-81e5-7cc861ea2182</stepIdentifier>
+            <type>VariableOperation</type>
+        </botSteps>
+        <botSteps>
+            <botMessages>
+                <message>{!status}
+{!message}</message>
+                <messageIdentifier>bac0578e-8756-96f8-dd58-82d1b5982500</messageIdentifier>
+            </botMessages>
+            <stepIdentifier>aff9f28a-bc98-4109-9913-10ab1c3fc925</stepIdentifier>
+            <type>Message</type>
+        </botSteps>
+        <botSteps>
+            <botVariableOperation>
+                <askCollectIfSet>false</askCollectIfSet>
+                <botMessages>
+                    <message>Deseja encerrar a conversa?</message>
+                    <messageIdentifier>d4717278-0441-6d85-b62a-2f6cb97a78e2</messageIdentifier>
+                </botMessages>
+                <botQuickReplyOptions>
+                    <literalValue>Sim</literalValue>
+                    <quickReplyOptionIdentifier>dd3fa217-6773-d091-9dbc-c572c1a32a81</quickReplyOptionIdentifier>
+                </botQuickReplyOptions>
+                <botQuickReplyOptions>
+                    <literalValue>Não</literalValue>
+                    <quickReplyOptionIdentifier>3775ded6-1662-2e50-d9a1-b2ebe081f21d</quickReplyOptionIdentifier>
+                </botQuickReplyOptions>
+                <botVariableOperands>
+                    <disableAutoFill>true</disableAutoFill>
+                    <sourceName>_Text</sourceName>
+                    <sourceType>StandardMlSlotClass</sourceType>
+                    <targetName>EncerrarChat</targetName>
+                    <targetType>ConversationVariable</targetType>
+                </botVariableOperands>
+                <optionalCollect>false</optionalCollect>
+                <quickReplyType>Static</quickReplyType>
+                <quickReplyWidgetType>Buttons</quickReplyWidgetType>
+                <type>Collect</type>
+                <variableOperationIdentifier>9c144a51-c4f1-8530-307d-d04c16a5a84c</variableOperationIdentifier>
+            </botVariableOperation>
+            <stepIdentifier>e8f93eff-3834-4955-a53b-22ab95b41d6d</stepIdentifier>
+            <type>VariableOperation</type>
+        </botSteps>
+        <botSteps>
+            <botStepConditions>
+                <leftOperandName>EncerrarChat</leftOperandName>
+                <leftOperandType>ConversationVariable</leftOperandType>
+                <operatorType>Equals</operatorType>
+                <rightOperandValue>Sim</rightOperandValue>
+            </botStepConditions>
+            <botSteps>
+                <botNavigation>
+                    <botNavigationLinks>
+                        <targetBotDialog>End_Chat</targetBotDialog>
+                    </botNavigationLinks>
+                    <type>Call</type>
+                </botNavigation>
+                <stepIdentifier>98bd55f8-6f16-4eda-966d-0de492ec9182</stepIdentifier>
+                <type>Navigation</type>
+            </botSteps>
+            <conditionLogicType>And</conditionLogicType>
+            <stepIdentifier>9af59768-b941-4999-aa19-0abbd39ddbd6</stepIdentifier>
+            <type>Group</type>
+        </botSteps>
+        <botSteps>
+            <botStepConditions>
+                <leftOperandName>EncerrarChat</leftOperandName>
+                <leftOperandType>ConversationVariable</leftOperandType>
+                <operatorType>Equals</operatorType>
+                <rightOperandValue>Não</rightOperandValue>
+            </botStepConditions>
+            <botSteps>
+                <botNavigation>
+                    <botNavigationLinks>
+                        <targetBotDialog>Main_Menu</targetBotDialog>
+                    </botNavigationLinks>
+                    <type>Redirect</type>
+                </botNavigation>
+                <stepIdentifier>3c1670b3-887c-44ab-8d3d-02e9a23b107e</stepIdentifier>
+                <type>Navigation</type>
+            </botSteps>
+            <conditionLogicType>And</conditionLogicType>
+            <stepIdentifier>2dc26d9b-ad22-e491-7888-0dbb75bde3dd</stepIdentifier>
+            <type>Group</type>
+        </botSteps>
         <botSteps>
             <stepIdentifier>a68352fe-22a7-464c-9435-884e5d4204c4</stepIdentifier>
             <type>Wait</type>
@@ -296,13 +614,38 @@
     </conversationSystemDialogs>
     <conversationVariables>
         <dataType>Text</dataType>
+        <developerName>company</developerName>
+        <label>company</label>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <developerName>email</developerName>
+        <label>email</label>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Text</dataType>
         <developerName>EncerrarChat</developerName>
         <label>EncerrarChat</label>
     </conversationVariables>
     <conversationVariables>
         <dataType>Text</dataType>
+        <developerName>FirstName</developerName>
+        <label>FirstName</label>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Text</dataType>
         <developerName>First_Name</developerName>
         <label>First Name</label>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <developerName>LastName</developerName>
+        <label>LastName</label>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <developerName>message</developerName>
+        <label>message</label>
     </conversationVariables>
     <conversationVariables>
         <dataType>Text</dataType>
@@ -316,8 +659,28 @@
     </conversationVariables>
     <conversationVariables>
         <dataType>Text</dataType>
+        <developerName>phone</developerName>
+        <label>phone</label>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <developerName>phonenumber</developerName>
+        <label>phonenumber</label>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Text</dataType>
         <developerName>Resposta</developerName>
         <label>Resposta</label>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <developerName>Status</developerName>
+        <label>Status</label>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <developerName>title</developerName>
+        <label>title</label>
     </conversationVariables>
     <entryDialog>Welcome</entryDialog>
     <intentDisambiguationEnabled>false</intentDisambiguationEnabled>

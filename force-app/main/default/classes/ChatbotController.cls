@@ -4,7 +4,7 @@ global with sharing class ChatbotController {
 
     global class FlowInput {
         @InvocableVariable(required = true)
-        public String requestMessage;
+        public String questionMessage;
     }
 
     global class FlowOutput {
