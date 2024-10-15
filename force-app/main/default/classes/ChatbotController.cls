@@ -38,10 +38,11 @@ global with sharing class ChatbotController {
         request.setHeader('Content-Type', 'application/json');
         request.setHeader('Accept', 'application/json');
         request.setHeader('Authorization', 'Bearer ' + CHAT_GPT_KEY);
+        request.setTimeout(60000);
 
         
         String prompt = message[0].questionMessage + '. Por favor, se baseie em um contexto voltado para o Salesforce. Caso não seja possível, favor informar previamente.';
-        request.setBody('{"model": "gpt-4o-mini","messages": [{"role": "user", "content": "'+ prompt +'"}], "temperature": 0.5}');
+        request.setBody('{"model": "gpt-4o-mini","messages": [{"role": "user", "content": "'+ prompt +'"}], "temperature": 0.9}');
         
         Http http = new Http();
         HttpResponse response = http.send(request);
