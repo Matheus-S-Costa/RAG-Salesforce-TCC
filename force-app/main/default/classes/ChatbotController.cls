@@ -31,7 +31,6 @@ global with sharing class ChatbotController {
 
     @InvocableMethod(label = 'Interagir com IA' description='Envie a pergunta para Open AI e receba a resposta.')
     global static List<FlowOutput> callApi(List<FlowInput> message) {
-        System.debug(message);
         HttpRequest request = new HttpRequest();
 
         request.setEndpoint(endpoint);
@@ -46,7 +45,6 @@ global with sharing class ChatbotController {
         
         Http http = new Http();
         HttpResponse response = http.send(request);
-        System.debug(response.getBody());
 
         return getMessage(response);
     }
