@@ -72,11 +72,23 @@
     <botDialogs>
         <botSteps>
             <botMessages>
-                <message>Obrigado por nos contactar. Para fechar a conversa, por favor, selecione &quot;End Chat&quot;.</message>
+                <message>Obrigado por nos contactar. O chat será encerrado, porém, caso surja alguma dúvida, basta me acionar novamente.</message>
                 <messageIdentifier>d8229965-7e1a-4ce1-b3d6-7b714d0eb87d</messageIdentifier>
             </botMessages>
             <stepIdentifier>c1462d69-376b-4930-8456-a6dfa18578ff</stepIdentifier>
             <type>Message</type>
+        </botSteps>
+        <botSteps>
+            <botSteps>
+                <conversationSystemMessage>
+                    <type>EndChat</type>
+                </conversationSystemMessage>
+                <stepIdentifier>4c1afe01-2c9a-4f05-916c-9e5f73982ede</stepIdentifier>
+                <type>SystemMessage</type>
+            </botSteps>
+            <conditionLogicType>And</conditionLogicType>
+            <stepIdentifier>7c14f441-aa86-4507-8d03-717df9e4fc83</stepIdentifier>
+            <type>Group</type>
         </botSteps>
         <botSteps>
             <stepIdentifier>54d215b8-bee9-4e31-80b6-e9846a12a36d</stepIdentifier>
@@ -84,7 +96,7 @@
         </botSteps>
         <developerName>End_Chat</developerName>
         <isPlaceholderDialog>false</isPlaceholderDialog>
-        <label>End Chat</label>
+        <label>Encerrar Chat</label>
         <showInFooterMenu>false</showInFooterMenu>
     </botDialogs>
     <botDialogs>
@@ -201,7 +213,7 @@
                     </invocationMappings>
                 </botInvocation>
                 <type>Set</type>
-                <variableOperationIdentifier>78e10500-ffcd-415c-8b8d-f42874eacb66</variableOperationIdentifier>
+                <variableOperationIdentifier>1d4126c8-23dc-45f5-890b-52170537777d</variableOperationIdentifier>
             </botVariableOperation>
             <stepIdentifier>7b719068-cccf-4065-a6ce-c759368961f3</stepIdentifier>
             <type>VariableOperation</type>
@@ -216,18 +228,22 @@
         </botSteps>
         <botSteps>
             <botVariableOperation>
-                <askCollectIfSet>false</askCollectIfSet>
+                <askCollectIfSet>true</askCollectIfSet>
                 <botMessages>
                     <message>Deseja encerrar a conversa?</message>
                     <messageIdentifier>6e9c5521-478a-57e2-9a8f-77059ba51b6e</messageIdentifier>
                 </botMessages>
                 <botQuickReplyOptions>
-                    <literalValue>Sim</literalValue>
-                    <quickReplyOptionIdentifier>213b1831-ebd7-08ce-32d0-0ebece921bf5</quickReplyOptionIdentifier>
+                    <literalValue>Continuar</literalValue>
+                    <quickReplyOptionIdentifier>da6bac8b-b3e4-3dbe-10b3-000c3ae6e8fa</quickReplyOptionIdentifier>
                 </botQuickReplyOptions>
                 <botQuickReplyOptions>
-                    <literalValue>Não</literalValue>
-                    <quickReplyOptionIdentifier>bb749f69-aa3c-4dbd-c2d3-6d6cbeab6c8d</quickReplyOptionIdentifier>
+                    <literalValue>Sair</literalValue>
+                    <quickReplyOptionIdentifier>18ac5a15-7ddf-2b54-4311-3eb1043ba608</quickReplyOptionIdentifier>
+                </botQuickReplyOptions>
+                <botQuickReplyOptions>
+                    <literalValue>Voltar ao menu</literalValue>
+                    <quickReplyOptionIdentifier>823a2694-2e01-29d4-5ad8-978b03014a4e</quickReplyOptionIdentifier>
                 </botQuickReplyOptions>
                 <botVariableOperands>
                     <disableAutoFill>true</disableAutoFill>
@@ -236,6 +252,7 @@
                     <targetName>EncerrarChat</targetName>
                     <targetType>ConversationVariable</targetType>
                 </botVariableOperands>
+                <ignoreIntentRecognition>false</ignoreIntentRecognition>
                 <optionalCollect>false</optionalCollect>
                 <quickReplyType>Static</quickReplyType>
                 <quickReplyWidgetType>Buttons</quickReplyWidgetType>
@@ -250,14 +267,17 @@
                 <leftOperandName>EncerrarChat</leftOperandName>
                 <leftOperandType>ConversationVariable</leftOperandType>
                 <operatorType>Equals</operatorType>
-                <rightOperandValue>Sim</rightOperandValue>
+                <rightOperandValue>Sair</rightOperandValue>
             </botStepConditions>
             <botSteps>
-                <conversationSystemMessage>
-                    <type>EndChat</type>
-                </conversationSystemMessage>
-                <stepIdentifier>59a7ed8c-a1f9-4f0a-9002-1d5ecdab5624</stepIdentifier>
-                <type>SystemMessage</type>
+                <botNavigation>
+                    <botNavigationLinks>
+                        <targetBotDialog>End_Chat</targetBotDialog>
+                    </botNavigationLinks>
+                    <type>Call</type>
+                </botNavigation>
+                <stepIdentifier>8b21a251-a44d-4cbf-8b82-afa622fee263</stepIdentifier>
+                <type>Navigation</type>
             </botSteps>
             <conditionLogicType>And</conditionLogicType>
             <stepIdentifier>db0beb20-f333-418c-839b-84bbc5a03b3a</stepIdentifier>
@@ -268,7 +288,7 @@
                 <leftOperandName>EncerrarChat</leftOperandName>
                 <leftOperandType>ConversationVariable</leftOperandType>
                 <operatorType>Equals</operatorType>
-                <rightOperandValue>Não</rightOperandValue>
+                <rightOperandValue>Voltar ao menu</rightOperandValue>
             </botStepConditions>
             <botSteps>
                 <botNavigation>
@@ -277,11 +297,32 @@
                     </botNavigationLinks>
                     <type>Redirect</type>
                 </botNavigation>
-                <stepIdentifier>1bcdd332-ba75-4046-aaf0-4e285f27330f</stepIdentifier>
+                <stepIdentifier>324046e9-0a9a-43be-a7a0-9cd8db905125</stepIdentifier>
                 <type>Navigation</type>
             </botSteps>
             <conditionLogicType>And</conditionLogicType>
             <stepIdentifier>41da0aba-646b-dc88-aac2-05e2373c0463</stepIdentifier>
+            <type>Group</type>
+        </botSteps>
+        <botSteps>
+            <botStepConditions>
+                <leftOperandName>EncerrarChat</leftOperandName>
+                <leftOperandType>ConversationVariable</leftOperandType>
+                <operatorType>Equals</operatorType>
+                <rightOperandValue>Continuar</rightOperandValue>
+            </botStepConditions>
+            <botSteps>
+                <botNavigation>
+                    <botNavigationLinks>
+                        <targetBotDialog>ChatIA</targetBotDialog>
+                    </botNavigationLinks>
+                    <type>Redirect</type>
+                </botNavigation>
+                <stepIdentifier>3575a20e-7d9a-4650-9070-7970822baa0f</stepIdentifier>
+                <type>Navigation</type>
+            </botSteps>
+            <conditionLogicType>And</conditionLogicType>
+            <stepIdentifier>aa14b55e-41ee-5f04-fe92-6dcce5e8efed</stepIdentifier>
             <type>Group</type>
         </botSteps>
         <botSteps>
@@ -543,6 +584,7 @@ refused@example.com</message>
                     <targetName>EncerrarChat</targetName>
                     <targetType>ConversationVariable</targetType>
                 </botVariableOperands>
+                <ignoreIntentRecognition>false</ignoreIntentRecognition>
                 <optionalCollect>false</optionalCollect>
                 <quickReplyType>Static</quickReplyType>
                 <quickReplyWidgetType>Buttons</quickReplyWidgetType>
@@ -614,38 +656,8 @@ refused@example.com</message>
     </conversationSystemDialogs>
     <conversationVariables>
         <dataType>Text</dataType>
-        <developerName>company</developerName>
-        <label>company</label>
-    </conversationVariables>
-    <conversationVariables>
-        <dataType>Text</dataType>
-        <developerName>email</developerName>
-        <label>email</label>
-    </conversationVariables>
-    <conversationVariables>
-        <dataType>Text</dataType>
-        <developerName>EncerrarChat</developerName>
-        <label>EncerrarChat</label>
-    </conversationVariables>
-    <conversationVariables>
-        <dataType>Text</dataType>
-        <developerName>FirstName</developerName>
-        <label>FirstName</label>
-    </conversationVariables>
-    <conversationVariables>
-        <dataType>Text</dataType>
         <developerName>First_Name</developerName>
         <label>First Name</label>
-    </conversationVariables>
-    <conversationVariables>
-        <dataType>Text</dataType>
-        <developerName>LastName</developerName>
-        <label>LastName</label>
-    </conversationVariables>
-    <conversationVariables>
-        <dataType>Text</dataType>
-        <developerName>message</developerName>
-        <label>message</label>
     </conversationVariables>
     <conversationVariables>
         <dataType>Text</dataType>
@@ -659,6 +671,36 @@ refused@example.com</message>
     </conversationVariables>
     <conversationVariables>
         <dataType>Text</dataType>
+        <developerName>Resposta</developerName>
+        <label>Resposta</label>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <developerName>EncerrarChat</developerName>
+        <label>EncerrarChat</label>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <developerName>LastName</developerName>
+        <label>LastName</label>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <developerName>FirstName</developerName>
+        <label>FirstName</label>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <developerName>company</developerName>
+        <label>company</label>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <developerName>email</developerName>
+        <label>email</label>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Text</dataType>
         <developerName>phone</developerName>
         <label>phone</label>
     </conversationVariables>
@@ -669,22 +711,29 @@ refused@example.com</message>
     </conversationVariables>
     <conversationVariables>
         <dataType>Text</dataType>
-        <developerName>Resposta</developerName>
-        <label>Resposta</label>
+        <developerName>Status</developerName>
+        <label>Status</label>
     </conversationVariables>
     <conversationVariables>
         <dataType>Text</dataType>
-        <developerName>Status</developerName>
-        <label>Status</label>
+        <developerName>message</developerName>
+        <label>message</label>
     </conversationVariables>
     <conversationVariables>
         <dataType>Text</dataType>
         <developerName>title</developerName>
         <label>title</label>
     </conversationVariables>
+    <conversationVariables>
+        <collectionType>List</collectionType>
+        <dataType>Text</dataType>
+        <developerName>EndChatbot</developerName>
+        <label>EndChatbot</label>
+    </conversationVariables>
     <entryDialog>Welcome</entryDialog>
     <intentDisambiguationEnabled>false</intentDisambiguationEnabled>
     <intentV3Enabled>true</intentV3Enabled>
+    <knowledgeActionEnabled>false</knowledgeActionEnabled>
     <knowledgeFallbackEnabled>false</knowledgeFallbackEnabled>
     <mainMenuDialog>Main_Menu</mainMenuDialog>
     <nlpProviders>
