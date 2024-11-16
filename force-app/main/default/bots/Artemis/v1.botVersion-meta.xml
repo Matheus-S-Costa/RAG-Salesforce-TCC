@@ -41,6 +41,9 @@
                     <targetBotDialog>ChatIA</targetBotDialog>
                 </botNavigationLinks>
                 <botNavigationLinks>
+                    <targetBotDialog>Conversar_com_Ollama</targetBotDialog>
+                </botNavigationLinks>
+                <botNavigationLinks>
                     <targetBotDialog>Criar_novo_lead</targetBotDialog>
                 </botNavigationLinks>
                 <botNavigationLinks>
@@ -331,7 +334,7 @@
         </botSteps>
         <developerName>ChatIA</developerName>
         <isPlaceholderDialog>false</isPlaceholderDialog>
-        <label>Conversar com nossa IA</label>
+        <label>Perguntas sobre Salesforce</label>
         <showInFooterMenu>true</showInFooterMenu>
     </botDialogs>
     <botDialogs>
@@ -645,6 +648,169 @@ refused@example.com</message>
         <label>Criar novo lead</label>
         <showInFooterMenu>false</showInFooterMenu>
     </botDialogs>
+    <botDialogs>
+        <botSteps>
+            <botVariableOperation>
+                <askCollectIfSet>true</askCollectIfSet>
+                <botMessages>
+                    <message>Como posso te ajudar?</message>
+                    <messageIdentifier>da41e5ac-3390-4729-08f4-d2a76bac3fdf</messageIdentifier>
+                </botMessages>
+                <botVariableOperands>
+                    <disableAutoFill>true</disableAutoFill>
+                    <sourceName>_Text</sourceName>
+                    <sourceType>StandardMlSlotClass</sourceType>
+                    <targetName>Pergunta</targetName>
+                    <targetType>ConversationVariable</targetType>
+                </botVariableOperands>
+                <optionalCollect>false</optionalCollect>
+                <quickReplyWidgetType>Buttons</quickReplyWidgetType>
+                <type>Collect</type>
+                <variableOperationIdentifier>64151390-0a4c-42fa-b547-9bd5bb4656b0</variableOperationIdentifier>
+            </botVariableOperation>
+            <stepIdentifier>55fd5b45-76a0-4bef-8457-8c5af928750f</stepIdentifier>
+            <type>VariableOperation</type>
+        </botSteps>
+        <botSteps>
+            <botVariableOperation>
+                <botInvocation>
+                    <invocationActionName>OllamaChatBotController</invocationActionName>
+                    <invocationActionType>apex</invocationActionType>
+                    <invocationMappings>
+                        <parameterName>message</parameterName>
+                        <type>Input</type>
+                        <variableName>Pergunta</variableName>
+                        <variableType>ConversationVariable</variableType>
+                    </invocationMappings>
+                    <invocationMappings>
+                        <parameterName>output</parameterName>
+                        <type>Output</type>
+                        <variableName>Resposta</variableName>
+                        <variableType>ConversationVariable</variableType>
+                    </invocationMappings>
+                </botInvocation>
+                <type>Set</type>
+                <variableOperationIdentifier>122147f5-d6e3-4728-90d8-4c90d7aee581</variableOperationIdentifier>
+            </botVariableOperation>
+            <stepIdentifier>7b719068-cccf-4065-a6ce-c759368961f3</stepIdentifier>
+            <type>VariableOperation</type>
+        </botSteps>
+        <botSteps>
+            <botMessages>
+                <message>{!Resposta}</message>
+                <messageIdentifier>99d3001c-75ff-9df8-e4ff-74cffe762493</messageIdentifier>
+            </botMessages>
+            <stepIdentifier>90789693-3366-4222-bb48-d06e41d0101b</stepIdentifier>
+            <type>Message</type>
+        </botSteps>
+        <botSteps>
+            <botVariableOperation>
+                <askCollectIfSet>true</askCollectIfSet>
+                <botMessages>
+                    <message>Deseja encerrar a conversa?</message>
+                    <messageIdentifier>6e9c5521-478a-57e2-9a8f-77059ba51b6e</messageIdentifier>
+                </botMessages>
+                <botQuickReplyOptions>
+                    <literalValue>Continuar</literalValue>
+                    <quickReplyOptionIdentifier>da6bac8b-b3e4-3dbe-10b3-000c3ae6e8fa</quickReplyOptionIdentifier>
+                </botQuickReplyOptions>
+                <botQuickReplyOptions>
+                    <literalValue>Sair</literalValue>
+                    <quickReplyOptionIdentifier>18ac5a15-7ddf-2b54-4311-3eb1043ba608</quickReplyOptionIdentifier>
+                </botQuickReplyOptions>
+                <botQuickReplyOptions>
+                    <literalValue>Voltar ao menu</literalValue>
+                    <quickReplyOptionIdentifier>823a2694-2e01-29d4-5ad8-978b03014a4e</quickReplyOptionIdentifier>
+                </botQuickReplyOptions>
+                <botVariableOperands>
+                    <disableAutoFill>true</disableAutoFill>
+                    <sourceName>_Text</sourceName>
+                    <sourceType>StandardMlSlotClass</sourceType>
+                    <targetName>EncerrarChat</targetName>
+                    <targetType>ConversationVariable</targetType>
+                </botVariableOperands>
+                <ignoreIntentRecognition>false</ignoreIntentRecognition>
+                <optionalCollect>false</optionalCollect>
+                <quickReplyType>Static</quickReplyType>
+                <quickReplyWidgetType>Buttons</quickReplyWidgetType>
+                <type>Collect</type>
+                <variableOperationIdentifier>8a62e49e-4b23-e974-b0f1-436d58ef03f2</variableOperationIdentifier>
+            </botVariableOperation>
+            <stepIdentifier>2b0935f8-52ff-4cd4-a7c4-40e33f54b863</stepIdentifier>
+            <type>VariableOperation</type>
+        </botSteps>
+        <botSteps>
+            <botStepConditions>
+                <leftOperandName>EncerrarChat</leftOperandName>
+                <leftOperandType>ConversationVariable</leftOperandType>
+                <operatorType>Equals</operatorType>
+                <rightOperandValue>Sair</rightOperandValue>
+            </botStepConditions>
+            <botSteps>
+                <botNavigation>
+                    <botNavigationLinks>
+                        <targetBotDialog>End_Chat</targetBotDialog>
+                    </botNavigationLinks>
+                    <type>Call</type>
+                </botNavigation>
+                <stepIdentifier>3c02d131-48cd-4d4c-acaf-549e07c4cbde</stepIdentifier>
+                <type>Navigation</type>
+            </botSteps>
+            <conditionLogicType>And</conditionLogicType>
+            <stepIdentifier>db0beb20-f333-418c-839b-84bbc5a03b3a</stepIdentifier>
+            <type>Group</type>
+        </botSteps>
+        <botSteps>
+            <botStepConditions>
+                <leftOperandName>EncerrarChat</leftOperandName>
+                <leftOperandType>ConversationVariable</leftOperandType>
+                <operatorType>Equals</operatorType>
+                <rightOperandValue>Voltar ao menu</rightOperandValue>
+            </botStepConditions>
+            <botSteps>
+                <botNavigation>
+                    <botNavigationLinks>
+                        <targetBotDialog>Main_Menu</targetBotDialog>
+                    </botNavigationLinks>
+                    <type>Redirect</type>
+                </botNavigation>
+                <stepIdentifier>38840ac4-5bca-4bd5-9318-0e353f9ebd78</stepIdentifier>
+                <type>Navigation</type>
+            </botSteps>
+            <conditionLogicType>And</conditionLogicType>
+            <stepIdentifier>41da0aba-646b-dc88-aac2-05e2373c0463</stepIdentifier>
+            <type>Group</type>
+        </botSteps>
+        <botSteps>
+            <botStepConditions>
+                <leftOperandName>EncerrarChat</leftOperandName>
+                <leftOperandType>ConversationVariable</leftOperandType>
+                <operatorType>Equals</operatorType>
+                <rightOperandValue>Continuar</rightOperandValue>
+            </botStepConditions>
+            <botSteps>
+                <botNavigation>
+                    <botNavigationLinks>
+                        <targetBotDialog>ChatIA</targetBotDialog>
+                    </botNavigationLinks>
+                    <type>Redirect</type>
+                </botNavigation>
+                <stepIdentifier>a886cad7-3446-4b51-8430-4dc03183ff94</stepIdentifier>
+                <type>Navigation</type>
+            </botSteps>
+            <conditionLogicType>And</conditionLogicType>
+            <stepIdentifier>aa14b55e-41ee-5f04-fe92-6dcce5e8efed</stepIdentifier>
+            <type>Group</type>
+        </botSteps>
+        <botSteps>
+            <stepIdentifier>47ee18ad-d5d1-468a-bba3-559b551dc1f2</stepIdentifier>
+            <type>Wait</type>
+        </botSteps>
+        <developerName>Conversar_com_Ollama</developerName>
+        <isPlaceholderDialog>false</isPlaceholderDialog>
+        <label>Perguntas gerais</label>
+        <showInFooterMenu>true</showInFooterMenu>
+    </botDialogs>
     <citationsEnabled>false</citationsEnabled>
     <conversationSystemDialogs>
         <dialog>Error_Handling</dialog>
@@ -744,5 +910,6 @@ refused@example.com</message>
         <language>en_US</language>
         <nlpProviderType>EinsteinAi</nlpProviderType>
     </nlpProviders>
+    <responseDelayMilliseconds>600</responseDelayMilliseconds>
     <smallTalkEnabled>false</smallTalkEnabled>
 </BotVersion>
