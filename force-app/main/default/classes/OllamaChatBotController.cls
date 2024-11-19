@@ -1,5 +1,5 @@
 global with sharing class OllamaChatBotController {
-    private static final String endpoint = 'callout:OllamaAPI/artemis.php';
+    private static final String endpoint = 'https://projetoartemis.com.br/api/artemis.php';
 
     global class FlowInput {
         @InvocableVariable(required = true)
@@ -14,11 +14,10 @@ global with sharing class OllamaChatBotController {
     private static FlowOutput getMessage(HttpResponse response) {
         FlowOutput flowOutput = new FlowOutput();
 
-        Map<String, Object> ollamaResponse = (Map<String, Object>) JSON.deserializeUntyped(response.getBody());
-        String content = (String) ollamaResponse.get('response');
+        String content = response.getBody();
 
         if (content != null) {
-            flowOutput.output = content;
+            flowOutput.output = EncodingUtil.urlDecode(content, 'UTF-8'); 
         } else {
             flowOutput.output = 'Resposta vazia ou não esperada da API Ollama.';
         }
@@ -31,31 +30,45 @@ global with sharing class OllamaChatBotController {
         List<FlowOutput> outputs = new List<FlowOutput>();
 
         if (inputs.isEmpty()) {
-            throw new IllegalArgumentException('A mensagem não pode estar vazia.');
+            FlowOutput errorOutput = new FlowOutput();
+            errorOutput.output = 'A mensagem não pode estar vazia.';
+            outputs.add(errorOutput);
+            return outputs;
         }
 
-            HttpRequest req = new HttpRequest();
-            req.setEndpoint(endpoint);
-            req.setMethod('POST');
-            req.setHeader('Content-Type', 'application/json');
-            req.setHeader('Accept', 'application/json');
+        HttpRequest req = new HttpRequest();
+        req.setEndpoint(endpoint);
+        req.setMethod('POST');
+        req.setHeader('Content-Type', 'application/json');
+        req.setHeader('Accept', 'application/json');
+        
+        String pergunta = inputs[0].message;
 
-            String body = inputs[0].message; 
-            String prompt = JSON.serialize('"prompt": ' + body);
-            String requestBody = JSON.serialize(new Map<String, Object> { 'prompt: ' => inputs[0].message });
+        // Usando a classe JSON para criar um corpo JSON seguro
+        Map<String, String> promptMap = new Map<String, String>{'prompt' => pergunta};
+        String promptBody = JSON.serialize(promptMap);
+        req.setBody(promptBody);
 
-            req.setBody(requestBody);
+        req.setTimeout(120 * 1000); 
 
-            req.setTimeout(60 * 1000); 
+        HttpResponse res;
+        try {
+            res = new Http().send(req);
 
-            Http http = new Http();
-            HttpResponse res = http.send(req);
-
+            // Verifica o status da resposta
             if (res.getStatusCode() == 200) {
-                outputs.add(getMessage(res));
+                FlowOutput flowOutput = getMessage(res);
+                outputs.add(flowOutput);
             } else {
-                throw new CalloutException('Falha ao chamar a API: ' + res.getStatusCode() + ' - ' + res.getStatus());
+                FlowOutput errorOutput = new FlowOutput();
+                errorOutput.output = 'Erro ao se comunicar com a API Ollama: ' + res.getStatus();
+                outputs.add(errorOutput);
             }
+        } catch (Exception e) {
+            FlowOutput errorOutput = new FlowOutput();
+            errorOutput.output = 'Erro ao fazer a requisição: ' + e.getMessage();
+            outputs.add(errorOutput);
+        }
 
         return outputs;
     }
