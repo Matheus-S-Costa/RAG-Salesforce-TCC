@@ -32,7 +32,7 @@ global with sharing class OllamaChatBotController {
         String reqBody = '{"prompt": "' + pergunta + '"}';
         req.setBody(reqBody);
 
-        req.setTimeout(110000); 
+        req.setTimeout(120000); 
 
         Http http = new Http();
         HttpResponse response = http.send(req);
