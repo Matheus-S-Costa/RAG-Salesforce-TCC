@@ -11,11 +11,30 @@ global with sharing class OllamaChatBotController {
         public String output;
     }
 
+    public class ResponseWrapper {
+        public String response; 
+    }
+
     private static List<FlowOutput> getMessage(HttpResponse response) {
         FlowOutput flowOutput = new FlowOutput();
         String responseBody = response.getBody();
 
-        flowOutput.output = responseBody;
+        String contentType = response.getHeader('Content-Type');
+        if (contentType != null && contentType.contains('application/json')) {
+            try {
+                ResponseWrapper deserializedResponse = (ResponseWrapper) JSON.deserialize(responseBody, ResponseWrapper.class);
+                if (deserializedResponse != null && deserializedResponse.response != null) {
+                    flowOutput.output = deserializedResponse.response;
+                } else {
+                    flowOutput.output = 'Erro: Resposta não contém a chave "response".';
+                }
+            } catch (Exception e) {
+                flowOutput.output = 'Erro ao processar a resposta JSON: ' + e.getMessage();
+            }
+        } else {
+            flowOutput.output = responseBody;
+        }
+
         return new List<FlowOutput> { flowOutput };
     }
 
@@ -29,10 +48,11 @@ global with sharing class OllamaChatBotController {
         req.setHeader('Content-Type', 'application/json');
         
         String pergunta = inputs[0].message;
+
         String reqBody = '{"prompt": "' + pergunta + '"}';
         req.setBody(reqBody);
 
-        req.setTimeout(120000); 
+        req.setTimeout(110000); 
 
         Http http = new Http();
         HttpResponse response = http.send(req);
