@@ -11,15 +11,28 @@ global with sharing class OllamaChatBotController {
         public String output;
     }
 
-    private static FlowOutput getMessage(HttpResponse response) {
+    private static FlowOutput getMessage(HttpResponse response, String requestMessage) {
         FlowOutput flowOutput = new FlowOutput();
-
         String content = response.getBody();
 
+        Ollama_Response__c apiResponse = new Ollama_Response__c();
+        apiResponse.Message__c = requestMessage;
+        apiResponse.Name = 'Chatbot - ' + System.now().format() + ' - ' +  UserInfo.getName();
+
         if (content != null) {
-            flowOutput.output = EncodingUtil.urlDecode(content, 'UTF-8'); 
+            flowOutput.output = content;
+            apiResponse.Response__c = content;
+            apiResponse.Status__c = 'Concluído';
         } else {
             flowOutput.output = 'Resposta vazia ou não esperada da API Ollama.';
+            apiResponse.Response__c = flowOutput.output;
+            apiResponse.Status__c = 'Erro';
+        }
+
+        try {
+            insert apiResponse;
+        } catch (Exception e) {
+            System.debug('Erro ao salvar resposta na APIResponse__c: ' + e.getMessage());
         }
 
         return flowOutput;
@@ -44,7 +57,6 @@ global with sharing class OllamaChatBotController {
         
         String pergunta = inputs[0].message;
 
-        // Usando a classe JSON para criar um corpo JSON seguro
         Map<String, String> promptMap = new Map<String, String>{'prompt' => pergunta};
         String promptBody = JSON.serialize(promptMap);
         req.setBody(promptBody);
@@ -55,9 +67,8 @@ global with sharing class OllamaChatBotController {
         try {
             res = new Http().send(req);
 
-            // Verifica o status da resposta
             if (res.getStatusCode() == 200) {
-                FlowOutput flowOutput = getMessage(res);
+                FlowOutput flowOutput = getMessage(res, pergunta);
                 outputs.add(flowOutput);
             } else {
                 FlowOutput errorOutput = new FlowOutput();

@@ -11,9 +11,16 @@
 	<types>
 		<members>ChatbotController</members>
 		<members>ChatbotControllerTest</members>
+		<members>DeleteOllamaResponsesBatch</members>
+		<members>DeleteOllamaResponsesSchedule</members>
 		<members>LeadController</members>
 		<members>LeadControllerTest</members>
+		<members>OllamaChatBotController</members>
 		<name>ApexClass</name>
+	</types>
+		<types>
+		<members>Ollama_Response__c</members>
+		<name>CustomObject</name>
 	</types>
 	<version>60.0</version>
 </Package>
