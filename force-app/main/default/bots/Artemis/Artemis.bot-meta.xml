@@ -4,7 +4,7 @@
         <label>Artemis</label>
         <name>Artemis</name>
     </botMlDomain>
-    <botUser>gabriellrodriigues17@gmail.com.tcc</botUser>
+    <botUser>matheusilva334@gmail.com.tcc</botUser>
     <contextVariables>
         <contextVariableMappings>
             <SObjectType>LiveChatTranscript</SObjectType>
@@ -51,7 +51,7 @@
     </conversationChannelProviders>
     <description>Um assistente virtual.</description>
     <label>Artemis</label>
-    <logPrivateConversationData>false</logPrivateConversationData>
+    <logPrivateConversationData>true</logPrivateConversationData>
     <richContentEnabled>false</richContentEnabled>
     <sessionTimeout>480</sessionTimeout>
     <type>Bot</type>

@@ -5,7 +5,7 @@
     <botDialogs>
         <botSteps>
             <botMessages>
-                <message>Oi, eu sou Artemis, um assistente digital. Estou aqui para responder suas perguntas</message>
+                <message>Oi, eu sou Artemis, um assistente digital. Estou aqui para responder suas perguntas!</message>
                 <messageIdentifier>e78fefd2-a079-4159-90cd-5a3ab6dd73a2</messageIdentifier>
             </botMessages>
             <stepIdentifier>d1994c92-2456-4af2-9b3f-9eaa2130290d</stepIdentifier>
@@ -41,7 +41,7 @@
                     <targetBotDialog>ChatIA</targetBotDialog>
                 </botNavigationLinks>
                 <botNavigationLinks>
-                    <targetBotDialog>Conversar_com_Ollama</targetBotDialog>
+                    <targetBotDialog>Perguntas_Gerais</targetBotDialog>
                 </botNavigationLinks>
                 <botNavigationLinks>
                     <targetBotDialog>Criar_novo_lead</targetBotDialog>
@@ -130,6 +130,14 @@
             <type>Message</type>
         </botSteps>
         <botSteps>
+            <botMessages>
+                <message>Nota: Caso você tenha selecionado a opção de &quot;Perguntas gerais&quot;e sua resposta não tenha aparecido, experimente tentar ver a resposta no objeto &quot;Ollama_Response__c&quot;.</message>
+                <messageIdentifier>f9bf1725-ac81-3cfa-eef5-987ab4902d30</messageIdentifier>
+            </botMessages>
+            <stepIdentifier>9ba55b36-a6dc-4817-b20b-a473affb11fa</stepIdentifier>
+            <type>Message</type>
+        </botSteps>
+        <botSteps>
             <botSteps>
                 <botNavigation>
                     <botNavigationLinks>
@@ -137,7 +145,7 @@
                     </botNavigationLinks>
                     <type>Redirect</type>
                 </botNavigation>
-                <stepIdentifier>2ea8cfc2-4409-43be-9e9b-8c197c8dcc9a</stepIdentifier>
+                <stepIdentifier>036dc181-1afa-4673-80f2-7bef781c99a0</stepIdentifier>
                 <type>Navigation</type>
             </botSteps>
             <conditionLogicType>And</conditionLogicType>
@@ -156,18 +164,29 @@
     <botDialogs>
         <botSteps>
             <botMessages>
-                <message>Infelizmente, ocorreu um erro no nosso sistema. Nós tentaremos contactar um agente para apoia-lo.</message>
-                <messageIdentifier>521f1342-a3af-42ed-92d4-5fe7ec87ca59</messageIdentifier>
+                <message>Infelizmente, o nosso servidor não consegue gerar instantaneamente a sua resposta. Verifique as possíveis respostas no objeto Ollama Response.</message>
+                <messageIdentifier>eccd05f3-3c4b-1c50-693d-ecd5a609703c</messageIdentifier>
             </botMessages>
-            <stepIdentifier>d4fd3f11-f66a-49da-8182-a3281f75ca05</stepIdentifier>
+            <stepIdentifier>0ff9d2b9-e9a6-455c-8700-940242043685</stepIdentifier>
             <type>Message</type>
         </botSteps>
         <botSteps>
-            <conversationSystemMessage>
-                <type>Transfer</type>
-            </conversationSystemMessage>
+            <botMessages>
+                <message>Deseja realizar alguma outra operação?</message>
+                <messageIdentifier>57d6c199-371d-efd3-42b1-8ec05fd38f9d</messageIdentifier>
+            </botMessages>
+            <stepIdentifier>0de36c74-a160-745e-2bce-5e5fc034bbf9</stepIdentifier>
+            <type>Message</type>
+        </botSteps>
+        <botSteps>
+            <botNavigation>
+                <botNavigationLinks>
+                    <targetBotDialog>Main_Menu</targetBotDialog>
+                </botNavigationLinks>
+                <type>Redirect</type>
+            </botNavigation>
             <stepIdentifier>c4a0fc94-4fba-4f9c-b13c-94776b908056</stepIdentifier>
-            <type>SystemMessage</type>
+            <type>Navigation</type>
         </botSteps>
         <developerName>Error_Handling</developerName>
         <isPlaceholderDialog>false</isPlaceholderDialog>
@@ -255,7 +274,6 @@
                     <targetName>EncerrarChat</targetName>
                     <targetType>ConversationVariable</targetType>
                 </botVariableOperands>
-                <ignoreIntentRecognition>false</ignoreIntentRecognition>
                 <optionalCollect>false</optionalCollect>
                 <quickReplyType>Static</quickReplyType>
                 <quickReplyWidgetType>Buttons</quickReplyWidgetType>
@@ -587,7 +605,6 @@ refused@example.com</message>
                     <targetName>EncerrarChat</targetName>
                     <targetType>ConversationVariable</targetType>
                 </botVariableOperands>
-                <ignoreIntentRecognition>false</ignoreIntentRecognition>
                 <optionalCollect>false</optionalCollect>
                 <quickReplyType>Static</quickReplyType>
                 <quickReplyWidgetType>Buttons</quickReplyWidgetType>
@@ -690,7 +707,7 @@ refused@example.com</message>
                     </invocationMappings>
                 </botInvocation>
                 <type>Set</type>
-                <variableOperationIdentifier>122147f5-d6e3-4728-90d8-4c90d7aee581</variableOperationIdentifier>
+                <variableOperationIdentifier>6d486bcb-5dd0-41f6-a7cf-82536580628b</variableOperationIdentifier>
             </botVariableOperation>
             <stepIdentifier>7b719068-cccf-4065-a6ce-c759368961f3</stepIdentifier>
             <type>VariableOperation</type>
@@ -729,7 +746,6 @@ refused@example.com</message>
                     <targetName>EncerrarChat</targetName>
                     <targetType>ConversationVariable</targetType>
                 </botVariableOperands>
-                <ignoreIntentRecognition>false</ignoreIntentRecognition>
                 <optionalCollect>false</optionalCollect>
                 <quickReplyType>Static</quickReplyType>
                 <quickReplyWidgetType>Buttons</quickReplyWidgetType>
@@ -753,7 +769,7 @@ refused@example.com</message>
                     </botNavigationLinks>
                     <type>Call</type>
                 </botNavigation>
-                <stepIdentifier>3c02d131-48cd-4d4c-acaf-549e07c4cbde</stepIdentifier>
+                <stepIdentifier>926650c8-9707-4228-8bab-0a3f4e01e5b0</stepIdentifier>
                 <type>Navigation</type>
             </botSteps>
             <conditionLogicType>And</conditionLogicType>
@@ -774,7 +790,7 @@ refused@example.com</message>
                     </botNavigationLinks>
                     <type>Redirect</type>
                 </botNavigation>
-                <stepIdentifier>38840ac4-5bca-4bd5-9318-0e353f9ebd78</stepIdentifier>
+                <stepIdentifier>b68727bc-281e-4e63-881a-3a5615336261</stepIdentifier>
                 <type>Navigation</type>
             </botSteps>
             <conditionLogicType>And</conditionLogicType>
@@ -791,11 +807,11 @@ refused@example.com</message>
             <botSteps>
                 <botNavigation>
                     <botNavigationLinks>
-                        <targetBotDialog>ChatIA</targetBotDialog>
+                        <targetBotDialog>Perguntas_Gerais</targetBotDialog>
                     </botNavigationLinks>
                     <type>Redirect</type>
                 </botNavigation>
-                <stepIdentifier>a886cad7-3446-4b51-8430-4dc03183ff94</stepIdentifier>
+                <stepIdentifier>04fb73b4-687b-42e9-bf06-fccbb8ebecfc</stepIdentifier>
                 <type>Navigation</type>
             </botSteps>
             <conditionLogicType>And</conditionLogicType>
@@ -806,9 +822,9 @@ refused@example.com</message>
             <stepIdentifier>47ee18ad-d5d1-468a-bba3-559b551dc1f2</stepIdentifier>
             <type>Wait</type>
         </botSteps>
-        <developerName>Conversar_com_Ollama</developerName>
+        <developerName>Perguntas_Gerais</developerName>
         <isPlaceholderDialog>false</isPlaceholderDialog>
-        <label>Perguntas gerais</label>
+        <label>Perguntas Gerais</label>
         <showInFooterMenu>true</showInFooterMenu>
     </botDialogs>
     <citationsEnabled>false</citationsEnabled>
@@ -896,10 +912,15 @@ refused@example.com</message>
         <developerName>EndChatbot</developerName>
         <label>EndChatbot</label>
     </conversationVariables>
+    <conversationVariables>
+        <collectionType>List</collectionType>
+        <dataType>Text</dataType>
+        <developerName>answer</developerName>
+        <label>answer</label>
+    </conversationVariables>
     <entryDialog>Welcome</entryDialog>
     <intentDisambiguationEnabled>false</intentDisambiguationEnabled>
     <intentV3Enabled>true</intentV3Enabled>
-    <knowledgeActionEnabled>false</knowledgeActionEnabled>
     <knowledgeFallbackEnabled>false</knowledgeFallbackEnabled>
     <mainMenuDialog>Main_Menu</mainMenuDialog>
     <nlpProviders>
