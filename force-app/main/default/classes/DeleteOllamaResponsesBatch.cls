@@ -1,7 +1,8 @@
 global with sharing class DeleteOllamaResponsesBatch implements Database.Batchable<SObject> {
     
     global Database.QueryLocator start(Database.BatchableContext BC) {
-        String query = 'SELECT Id FROM Ollama_Response__c WHERE CreatedDate <= :System.now().addDays(-1)';
+        DateTime limite = System.now().addDays(-3);
+        String query = 'SELECT Id FROM Ollama_Response__c WHERE CreatedDate <= :limite';
         return Database.getQueryLocator(query);
     }
     
