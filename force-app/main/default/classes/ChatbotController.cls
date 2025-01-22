@@ -42,7 +42,7 @@ global with sharing class ChatbotController {
 
         
         String prompt = message[0].questionMessage + '. Por favor, se baseie em um contexto voltado para o Salesforce.';
-        request.setBody('{"model": "gpt-4o-mini","messages": [{"role": "user", "content": "'+ prompt +'"}], "temperature": 0.9}');
+        request.setBody('{"model": "gpt-4o-mini","messages": [{"role": "user", "content": "'+ prompt +'"}], "temperature": 0.5}');
         
         Http http = new Http();
         HttpResponse response = http.send(request);
